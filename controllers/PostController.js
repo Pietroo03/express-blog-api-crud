@@ -20,7 +20,7 @@ const index = (req, res) => {
 }
 
 const show = (req, res) => {
-    const post = posts.find(post => post.slug === (req.params.slug))
+    const post = posts.find(post => post.slug.toLowerCase() === (req.params.slug))
 
     if(!post) {
         return res.status(404).json({
@@ -33,9 +33,15 @@ const show = (req, res) => {
     })
 }
 
+const store = (req, res) => {
+    console.log(req.body);
+    
+}
+
 
 module.exports = {
     index,
     show,
+    store
 }
 
