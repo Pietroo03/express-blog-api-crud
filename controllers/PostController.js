@@ -1,4 +1,5 @@
 const posts = require('../data/db.js')
+const fs = require('fs')
 
 const index = (req, res) => {
     let html = ''
@@ -35,6 +36,23 @@ const show = (req, res) => {
 
 const store = (req, res) => {
     console.log(req.body);
+
+    const post = {
+        title: req.body.title,
+        slug: req.body.slug,
+        content: req.body.content,
+        image: req.body.image,
+        tags: req.body.tags
+    }
+
+    posts.push(post)
+
+    fs.writeFileSync('./data/db.js', `module.exports = ${JSON.stringify(posts, null, 4)}`)
+
+    return res.status(201).json({
+        data: posts,
+        counter: posts.length
+    })
 }
 
 
