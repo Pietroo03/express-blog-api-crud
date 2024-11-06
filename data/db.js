@@ -8,7 +8,9 @@ module.exports = [
             "Dolci",
             "Torte",
             "Ricette vegetariane",
-            "Ricette al forno"
+            "Ricette al forno",
+            "Ricca",
+            "Deliziosa"
         ]
     },
     {
