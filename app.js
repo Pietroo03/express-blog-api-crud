@@ -13,10 +13,16 @@ app.listen(port, () => {
     console.log(`Example app listening on ${host}:${port}`)
 })
 
+app.use('/posts', (req, res, next) => {
+    throw new Error('You broke everything!')
+})
+
 app.use('/posts', loggerMiddleware)
 
 app.use('/posts', PostsRouter)
 
 app.use(notFoundMiddleware)
+
+
 
 
