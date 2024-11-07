@@ -10,4 +10,6 @@ router.post('/', pokemonController.store)
 
 router.put('/:name', pokemonController.update)
 
+router.delete('/:name', pokemonController.destroy)
+
 module.exports = router

@@ -63,9 +63,29 @@ const update = (req, res) => {
     })
 }
 
+const destroy = (req, res) => {
+    const pokemon = pokemons.find((pokemon) => pokemon.name.toLowerCase() === req.params.name)
+
+    if (!pokemon) {
+        return res.status(404).json({
+            error: `Nessun pokemon trovato con il nome ${req.params.name}`
+        })
+    }
+
+    const newPokemons = pokemons.filter((pokemon) => pokemon.name.toLowerCase() !== req.params.name)
+
+    fs.writeFileSync('./data/pokemonList.js', `module.exports = ${JSON.stringify(newPokemons, null, 4)}`)
+
+    return res.status(200).json({
+        data: newPokemons,
+        counter: newPokemons.length
+    })
+}
+
 module.exports = {
     index,
     show,
     store,
-    update
+    update,
+    destroy
 }
