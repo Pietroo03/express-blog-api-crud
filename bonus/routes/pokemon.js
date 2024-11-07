@@ -6,4 +6,6 @@ router.get('/', pokemonController.index)
 
 router.get('/:name', pokemonController.show)
 
+router.post('/', pokemonController.store)
+
 module.exports = router

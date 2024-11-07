@@ -1,4 +1,5 @@
 const pokemons = require('../data/db.js')
+const fs = require('fs')
 
 const index = (req, res) => {
     res.json({
@@ -21,7 +22,28 @@ const show = (req, res) => {
     })
 }
 
+const store = (req, res) => {
+
+    const pokemon = {
+        name: req.body.name,
+        type: req.body.type,
+        level: req.body.level
+    }
+
+    pokemons.push(pokemon)
+
+    fs.writeFileSync('./data/db.js', `module.exports = ${JSON.stringify(pokemons, null, 4)}`)
+
+    return res.status(201).json({
+        status: 201,
+        data: pokemons,
+        counter: pokemons.length
+    })
+
+}
+
 module.exports = {
     index,
-    show
+    show,
+    store
 }
