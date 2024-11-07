@@ -1,4 +1,4 @@
-const pokemons = require('../data/db.js')
+const pokemons = require('../data/pokemonList.js')
 const fs = require('fs')
 
 const index = (req, res) => {
@@ -32,7 +32,7 @@ const store = (req, res) => {
 
     pokemons.push(pokemon)
 
-    fs.writeFileSync('./data/db.js', `module.exports = ${JSON.stringify(pokemons, null, 4)}`)
+    fs.writeFileSync('./data/pokemonList.js', `module.exports = ${JSON.stringify(pokemons, null, 4)}`)
 
     return res.status(201).json({
         status: 201,
@@ -42,8 +42,30 @@ const store = (req, res) => {
 
 }
 
+const update = (req, res) => {
+    const pokemon = pokemons.find((pokemon) => pokemon.name.toLowerCase() === req.params.name)
+
+    if (!pokemon) {
+        return res.status(404).json({
+            error: `Nessun pokemon trovato con il nome di ${req.params.name} `
+        })
+    }
+
+    pokemon.name = req.body.name
+    pokemon.type = req.body.type
+    pokemon.level = req.body.level
+
+    fs.writeFileSync('./data/pokemonList.js', `module.exports = ${JSON.stringify(pokemons, null, 4)}`)
+
+    return res.status(201).json({
+        data: pokemons,
+        counter: pokemons.length
+    })
+}
+
 module.exports = {
     index,
     show,
-    store
+    store,
+    update
 }

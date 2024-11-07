@@ -7,7 +7,7 @@ module.exports = [
     {
         "name": "Charmander",
         "type": "Fire",
-        "level": 15
+        "level": 20
     },
     {
         "name": "Bulbasaur",
